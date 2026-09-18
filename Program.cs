@@ -11,11 +11,11 @@ class Program
         {
             Console.Clear();
 
-            Console.WriteLine("=================================");
-            Console.WriteLine("          HAUPTMENÜ");
-            Console.WriteLine("=================================");
+            Console.WriteLine("==========================================");
+            Console.WriteLine("                 HAUPTMENÜ");
+            Console.WriteLine("==========================================");
             Console.WriteLine("1. Variablen und Datentypen");
-            Console.WriteLine("2. Benutzer begrüßen");
+            Console.WriteLine("2. Benutzer begrüssen");
             Console.WriteLine("3. Addition durchführen");
             Console.WriteLine("4. Namen in Grossbuchstaben");
             Console.WriteLine("5. Wörter kombinieren");
@@ -23,8 +23,10 @@ class Program
             Console.WriteLine("7. Grundrechenarten");
             Console.WriteLine("8. Variable erhöhen und erniedrigen");
             Console.WriteLine("9. Protein-Schokoriegel kaufen");
+            Console.WriteLine("10. Passwort-Stärke testen");
+            Console.WriteLine("11. BMI berechnen");
             Console.WriteLine("0. Programm beenden");
-            Console.WriteLine("=================================");
+            Console.WriteLine("==========================================");
 
             Console.Write("Wähle ein Programm: ");
             string auswahl = Console.ReadLine() ?? "";
@@ -69,6 +71,14 @@ class Program
                     SchokoriegelKaufen();
                     break;
 
+                case "10":
+                    PasswortStaerkeTesten();
+                    break;
+
+                case "11":
+                    BmiBerechnen();
+                    break;
+
                 case "0":
                     programmLaeuft = false;
                     Console.WriteLine("Das Programm wird beendet.");
@@ -87,6 +97,7 @@ class Program
                 Console.WriteLine(
                     "Drücke ENTER, um zum Hauptmenü zurückzukehren."
                 );
+
                 Console.ReadLine();
             }
         }
@@ -100,7 +111,8 @@ class Program
         int ganzzahl = 101;
 
         Console.WriteLine(
-            $"Die Variable 'ganzzahl' hat den Typ {ganzzahl.GetType().Name}."
+            $"Die Variable 'ganzzahl' hat den Typ "
+            + $"{ganzzahl.GetType().Name}."
         );
 
         Console.WriteLine(
@@ -112,7 +124,8 @@ class Program
         decimal kommazahl = 10.1m;
 
         Console.WriteLine(
-            $"Die Variable 'kommazahl' hat den Typ {kommazahl.GetType().Name}."
+            $"Die Variable 'kommazahl' hat den Typ "
+            + $"{kommazahl.GetType().Name}."
         );
 
         Console.WriteLine(
@@ -124,7 +137,8 @@ class Program
         string text = "Einhunderteins";
 
         Console.WriteLine(
-            $"Die Variable 'text' hat den Typ {text.GetType().Name}."
+            $"Die Variable 'text' hat den Typ "
+            + $"{text.GetType().Name}."
         );
 
         Console.WriteLine(
@@ -140,7 +154,9 @@ class Program
             "Der Name darf nicht leer sein: "
         );
 
-        Console.WriteLine($"Herzlich willkommen, {name}!");
+        Console.WriteLine(
+            $"Herzlich willkommen, {name}!"
+        );
     }
 
     static void Addition()
@@ -173,7 +189,7 @@ class Program
 
         Console.WriteLine();
         Console.WriteLine(
-            "Dein Name wird unten in Grossbuchstaben angegeben."
+            "Dein Name wird unten in Grossbuchstaben angegeben:"
         );
 
         Console.WriteLine(name.ToUpper());
@@ -235,6 +251,7 @@ class Program
         decimal netto =
             bruttolohn - steuerBetrag;
 
+        Console.WriteLine();
         Console.WriteLine(
             $"Steuerbetrag: {steuerBetrag:F2} Franken"
         );
@@ -264,16 +281,21 @@ class Program
         decimal subtraktion = zahl1 - zahl2;
         decimal multiplikation = zahl1 * zahl2;
 
+        Console.WriteLine();
+
         Console.WriteLine(
-            $"Die Addition von {zahl1} und {zahl2} ergibt: {addition}"
+            $"Die Addition von {zahl1} und {zahl2} ergibt: "
+            + $"{addition}"
         );
 
         Console.WriteLine(
-            $"Die Subtraktion von {zahl1} und {zahl2} ergibt: {subtraktion}"
+            $"Die Subtraktion von {zahl1} und {zahl2} ergibt: "
+            + $"{subtraktion}"
         );
 
         Console.WriteLine(
-            $"Die Multiplikation von {zahl1} und {zahl2} ergibt: {multiplikation}"
+            $"Die Multiplikation von {zahl1} und {zahl2} ergibt: "
+            + $"{multiplikation}"
         );
 
         if (zahl2 == 0)
@@ -287,7 +309,8 @@ class Program
             decimal division = zahl1 / zahl2;
 
             Console.WriteLine(
-                $"Die Division von {zahl1} und {zahl2} ergibt: {division}"
+                $"Die Division von {zahl1} und {zahl2} ergibt: "
+                + $"{division}"
             );
         }
     }
@@ -314,56 +337,901 @@ class Program
     {
         const decimal preisRiegel = 3.20m;
 
+        decimal gesamteAusgaben = 0;
+        int gesamteAnzahlRiegel = 0;
+        bool weiterEinkaufen = true;
+
         Console.WriteLine(
-            $"Ein Protein-Schokoriegel kostet {preisRiegel:F2} Franken."
+            $"Ein Protein-Schokoriegel kostet "
+            + $"{preisRiegel:F2} Franken."
         );
 
-        decimal budget = DezimalzahlEingeben(
-            "Wie hoch ist dein Budget in Franken? ",
-            darfNegativSein: false
+        while (weiterEinkaufen)
+        {
+            Console.WriteLine();
+
+            decimal budget = DezimalzahlEingeben(
+                "Wie hoch ist dein Budget in Franken? ",
+                darfNegativSein: false
+            );
+
+            int maximaleAnzahl =
+                (int)Math.Floor(budget / preisRiegel);
+
+            if (maximaleAnzahl == 0)
+            {
+                Console.WriteLine(
+                    "Dein Budget reicht leider für keinen "
+                    + "Protein-Schokoriegel."
+                );
+            }
+            else
+            {
+                Console.WriteLine(
+                    $"Du kannst höchstens {maximaleAnzahl} "
+                    + "Protein-Schokoriegel kaufen."
+                );
+
+                int anzahlRiegel = GanzeZahlEingeben(
+                    "Wie viele Protein-Schokoriegel möchtest "
+                    + "du kaufen? ",
+                    1,
+                    maximaleAnzahl
+                );
+
+                decimal gesamtkosten =
+                    anzahlRiegel * preisRiegel;
+
+                decimal restgeld =
+                    budget - gesamtkosten;
+
+                gesamteAusgaben += gesamtkosten;
+                gesamteAnzahlRiegel += anzahlRiegel;
+
+                Console.WriteLine();
+
+                Console.WriteLine(
+                    $"Anzahl Riegel: {anzahlRiegel}"
+                );
+
+                Console.WriteLine(
+                    $"Gesamtkosten: {gesamtkosten:F2} Franken"
+                );
+
+                Console.WriteLine(
+                    $"Restgeld: {restgeld:F2} Franken"
+                );
+            }
+
+            Console.WriteLine();
+
+            Console.Write(
+                "Möchtest du nochmals Protein-Schokoriegel "
+                + "kaufen? (j/n): "
+            );
+
+            string antwort =
+                (Console.ReadLine() ?? "").Trim().ToLower();
+
+            if (antwort != "j")
+            {
+                weiterEinkaufen = false;
+            }
+        }
+
+        Console.WriteLine();
+
+        Console.WriteLine(
+            $"Insgesamt gekaufte Riegel: "
+            + $"{gesamteAnzahlRiegel}"
         );
 
-        int maximaleAnzahl =
-            (int)Math.Floor(budget / preisRiegel);
+        Console.WriteLine(
+            $"Gesamtausgaben: "
+            + $"{gesamteAusgaben:F2} Franken"
+        );
+    }
 
-        if (maximaleAnzahl == 0)
+    static void PasswortStaerkeTesten()
+    {
+        Console.WriteLine("==========================================");
+        Console.WriteLine("          PASSWORT-STÄRKE-TEST");
+        Console.WriteLine("==========================================");
+
+        Console.WriteLine(
+            "Beim Eingeben wird das Passwort mit '*' verdeckt."
+        );
+
+        Console.WriteLine(
+            "Das Passwort wird nicht gespeichert."
+        );
+
+        Console.WriteLine();
+
+        string passwort = PasswortEingeben();
+
+        if (string.IsNullOrEmpty(passwort))
         {
             Console.WriteLine(
-                "Dein Budget reicht leider für keinen Protein-Schokoriegel."
+                "Das Passwort darf nicht leer sein."
             );
 
             return;
         }
 
+        bool hatKleinbuchstaben = false;
+        bool hatGrossbuchstaben = false;
+        bool hatZahl = false;
+        bool hatSonderzeichen = false;
+
+        foreach (char zeichen in passwort)
+        {
+            if (char.IsLower(zeichen))
+            {
+                hatKleinbuchstaben = true;
+            }
+            else if (char.IsUpper(zeichen))
+            {
+                hatGrossbuchstaben = true;
+            }
+            else if (char.IsDigit(zeichen))
+            {
+                hatZahl = true;
+            }
+            else
+            {
+                hatSonderzeichen = true;
+            }
+        }
+
+        bool istHaeufigesPasswort =
+            IstHaeufigesPasswort(passwort);
+
+        bool hatEinfachesMuster =
+            HatEinfachesMuster(passwort);
+
+        int punktzahl =
+            BerechnePunktzahl(
+                passwort,
+                hatKleinbuchstaben,
+                hatGrossbuchstaben,
+                hatZahl,
+                hatSonderzeichen,
+                istHaeufigesPasswort,
+                hatEinfachesMuster
+            );
+
+        Console.WriteLine();
+        Console.WriteLine("Auswertung:");
+        Console.WriteLine();
+
         Console.WriteLine(
-            $"Du kannst höchstens {maximaleAnzahl} "
-            + "Protein-Schokoriegel kaufen."
+            $"Länge: {passwort.Length} Zeichen"
         );
 
-        int anzahlRiegel = GanzeZahlEingeben(
-            "Wie viele Protein-Schokoriegel möchtest du kaufen? ",
-            1,
-            maximaleAnzahl
+        if (passwort.Length >= 8)
+        {
+            Console.WriteLine(
+                "✓ Das Passwort ist mindestens 8 Zeichen lang."
+            );
+        }
+        else
+        {
+            Console.WriteLine(
+                "✗ Das Passwort ist kürzer als 8 Zeichen."
+            );
+        }
+
+        if (passwort.Length >= 12)
+        {
+            Console.WriteLine(
+                "✓ Das Passwort ist mindestens 12 Zeichen lang."
+            );
+        }
+        else
+        {
+            Console.WriteLine(
+                "✗ Das Passwort ist kürzer als 12 Zeichen."
+            );
+        }
+
+        if (passwort.Length >= 15)
+        {
+            Console.WriteLine(
+                "✓ Das Passwort ist mindestens 15 Zeichen lang."
+            );
+        }
+
+        if (hatKleinbuchstaben)
+        {
+            Console.WriteLine(
+                "✓ Das Passwort enthält Kleinbuchstaben."
+            );
+        }
+        else
+        {
+            Console.WriteLine(
+                "✗ Es fehlen Kleinbuchstaben."
+            );
+        }
+
+        if (hatGrossbuchstaben)
+        {
+            Console.WriteLine(
+                "✓ Das Passwort enthält Grossbuchstaben."
+            );
+        }
+        else
+        {
+            Console.WriteLine(
+                "✗ Es fehlen Grossbuchstaben."
+            );
+        }
+
+        if (hatZahl)
+        {
+            Console.WriteLine(
+                "✓ Das Passwort enthält mindestens eine Zahl."
+            );
+        }
+        else
+        {
+            Console.WriteLine(
+                "✗ Es fehlt mindestens eine Zahl."
+            );
+        }
+
+        if (hatSonderzeichen)
+        {
+            Console.WriteLine(
+                "✓ Das Passwort enthält ein Sonderzeichen."
+            );
+        }
+        else
+        {
+            Console.WriteLine(
+                "✗ Es fehlt mindestens ein Sonderzeichen."
+            );
+        }
+
+        if (istHaeufigesPasswort)
+        {
+            Console.WriteLine();
+            Console.WriteLine(
+                "⚠ Das Passwort ist sehr häufig."
+            );
+        }
+
+        if (hatEinfachesMuster)
+        {
+            Console.WriteLine();
+            Console.WriteLine(
+                "⚠ Das Passwort enthält ein einfaches Muster."
+            );
+        }
+
+        Console.WriteLine();
+        Console.WriteLine(
+            $"Punktzahl: {punktzahl} von 7"
         );
 
-        decimal gesamtkosten =
-            anzahlRiegel * preisRiegel;
+        Console.WriteLine(
+            $"Bewertung: {PasswortBewerten(punktzahl)}"
+        );
 
-        decimal restgeld =
-            budget - gesamtkosten;
+        double log10Versuche =
+            BerechneLog10Versuche(
+                passwort,
+                hatKleinbuchstaben,
+                hatGrossbuchstaben,
+                hatZahl,
+                hatSonderzeichen,
+                istHaeufigesPasswort,
+                hatEinfachesMuster
+            );
+
+        Console.WriteLine();
+        Console.WriteLine(
+            "Geschätzte Anzahl benötigter Versuche:"
+        );
+
+        Console.WriteLine(
+            $"Ungefähr 10^{log10Versuche:F1} Versuche."
+        );
+
+        Console.WriteLine();
+        Console.WriteLine(
+            "Geschätzte Knackzeiten:"
+        );
+
+        ZeigeKnackzeiten(log10Versuche);
+
+        Console.WriteLine();
+
+        ZeigeVerbesserungsvorschlaege(
+            passwort,
+            hatKleinbuchstaben,
+            hatGrossbuchstaben,
+            hatZahl,
+            hatSonderzeichen,
+            istHaeufigesPasswort,
+            hatEinfachesMuster
+        );
+    }
+
+    static string PasswortEingeben()
+    {
+        Console.Write("Passwort: ");
+
+        string passwort = "";
+
+        while (true)
+        {
+            ConsoleKeyInfo taste =
+                Console.ReadKey(intercept: true);
+
+            if (taste.Key == ConsoleKey.Enter)
+            {
+                Console.WriteLine();
+                break;
+            }
+
+            if (taste.Key == ConsoleKey.Backspace)
+            {
+                if (passwort.Length > 0)
+                {
+                    passwort = passwort.Substring(
+                        0,
+                        passwort.Length - 1
+                    );
+
+                    Console.Write("\b \b");
+                }
+            }
+            else if (taste.Key == ConsoleKey.Escape)
+            {
+                passwort = "";
+                Console.WriteLine();
+                break;
+            }
+            else if (!char.IsControl(taste.KeyChar))
+            {
+                passwort += taste.KeyChar;
+                Console.Write("*");
+            }
+        }
+
+        return passwort;
+    }
+
+    static int BerechnePunktzahl(
+        string passwort,
+        bool hatKleinbuchstaben,
+        bool hatGrossbuchstaben,
+        bool hatZahl,
+        bool hatSonderzeichen,
+        bool istHaeufigesPasswort,
+        bool hatEinfachesMuster
+    )
+    {
+        int punktzahl = 0;
+
+        if (passwort.Length >= 8)
+        {
+            punktzahl++;
+        }
+
+        if (passwort.Length >= 12)
+        {
+            punktzahl++;
+        }
+
+        if (passwort.Length >= 15)
+        {
+            punktzahl++;
+        }
+
+        if (hatKleinbuchstaben)
+        {
+            punktzahl++;
+        }
+
+        if (hatGrossbuchstaben)
+        {
+            punktzahl++;
+        }
+
+        if (hatZahl)
+        {
+            punktzahl++;
+        }
+
+        if (hatSonderzeichen)
+        {
+            punktzahl++;
+        }
+
+        if (istHaeufigesPasswort)
+        {
+            punktzahl -= 3;
+        }
+
+        if (hatEinfachesMuster)
+        {
+            punktzahl -= 2;
+        }
+
+        if (punktzahl < 0)
+        {
+            punktzahl = 0;
+        }
+
+        if (punktzahl > 7)
+        {
+            punktzahl = 7;
+        }
+
+        return punktzahl;
+    }
+
+    static bool IstHaeufigesPasswort(string passwort)
+    {
+        string passwortKlein =
+            passwort.ToLowerInvariant();
+
+        string[] haeufigePasswoerter =
+        {
+            "password",
+            "passwort",
+            "123456",
+            "12345678",
+            "123456789",
+            "1234567890",
+            "qwerty",
+            "qwertz",
+            "abc123",
+            "111111",
+            "000000",
+            "admin",
+            "welcome",
+            "letmein",
+            "iloveyou",
+            "m319"
+        };
+
+        foreach (string haeufigesPasswort
+                 in haeufigePasswoerter)
+        {
+            if (passwortKlein == haeufigesPasswort)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    static bool HatEinfachesMuster(string passwort)
+    {
+        if (passwort.Length < 3)
+        {
+            return false;
+        }
+
+        bool alleZeichenGleich = true;
+
+        for (int i = 1; i < passwort.Length; i++)
+        {
+            if (passwort[i] != passwort[0])
+            {
+                alleZeichenGleich = false;
+                break;
+            }
+        }
+
+        if (alleZeichenGleich)
+        {
+            return true;
+        }
+
+        string passwortKlein =
+            passwort.ToLowerInvariant();
+
+        string[] einfacheMuster =
+        {
+            "123",
+            "1234",
+            "12345",
+            "123456",
+            "321",
+            "4321",
+            "54321",
+            "654321",
+            "abc",
+            "abcd",
+            "abcdef",
+            "qwerty",
+            "qwertz",
+            "asdf",
+            "asdfgh"
+        };
+
+        foreach (string muster in einfacheMuster)
+        {
+            if (passwortKlein == muster)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    static string PasswortBewerten(int punktzahl)
+    {
+        if (punktzahl <= 2)
+        {
+            return "Sehr schwach";
+        }
+        else if (punktzahl <= 4)
+        {
+            return "Schwach";
+        }
+        else if (punktzahl <= 6)
+        {
+            return "Mittel";
+        }
+        else
+        {
+            return "Stark";
+        }
+    }
+
+    static double BerechneLog10Versuche(
+        string passwort,
+        bool hatKleinbuchstaben,
+        bool hatGrossbuchstaben,
+        bool hatZahl,
+        bool hatSonderzeichen,
+        bool istHaeufigesPasswort,
+        bool hatEinfachesMuster
+    )
+    {
+        if (istHaeufigesPasswort)
+        {
+            return 2;
+        }
+
+        if (hatEinfachesMuster)
+        {
+            return 3;
+        }
+
+        int zeichenraum = 0;
+
+        if (hatKleinbuchstaben)
+        {
+            zeichenraum += 26;
+        }
+
+        if (hatGrossbuchstaben)
+        {
+            zeichenraum += 26;
+        }
+
+        if (hatZahl)
+        {
+            zeichenraum += 10;
+        }
+
+        if (hatSonderzeichen)
+        {
+            zeichenraum += 32;
+        }
+
+        if (zeichenraum == 0)
+        {
+            return 0;
+        }
+
+        double log10Zeichenraum =
+            Math.Log10(zeichenraum);
+
+        double log10Versuche =
+            passwort.Length * log10Zeichenraum;
+
+        return log10Versuche;
+    }
+
+    static void ZeigeKnackzeiten(
+        double log10Versuche
+    )
+    {
+        Console.WriteLine();
+
+        Console.WriteLine(
+            "1. Online-Angriff mit Login-Begrenzung:"
+        );
+
+        ZeigeZeit(
+            log10Versuche,
+            100,
+            "pro Stunde"
+        );
 
         Console.WriteLine();
 
         Console.WriteLine(
-            $"Anzahl Riegel: {anzahlRiegel}"
+            "2. Offline-Angriff mit langsamer Prüfung:"
         );
 
-        Console.WriteLine(
-            $"Gesamtkosten: {gesamtkosten:F2} Franken"
+        ZeigeZeit(
+            log10Versuche,
+            100000,
+            "pro Sekunde"
         );
 
+        Console.WriteLine();
+
         Console.WriteLine(
-            $"Restgeld: {restgeld:F2} Franken"
+            "3. Sehr schneller Offline-Angriff:"
+        );
+
+        ZeigeZeit(
+            log10Versuche,
+            1000000000,
+            "pro Sekunde"
+        );
+
+        Console.WriteLine();
+
+        Console.WriteLine(
+            "Die Zeiten sind theoretische Schätzungen."
+        );
+    }
+
+    static void ZeigeZeit(
+        double log10Versuche,
+        double versucheProEinheit,
+        string einheit
+    )
+    {
+        double log10Sekunden;
+
+        if (einheit == "pro Stunde")
+        {
+            log10Sekunden =
+                log10Versuche
+                - Math.Log10(versucheProEinheit)
+                + Math.Log10(3600);
+        }
+        else
+        {
+            log10Sekunden =
+                log10Versuche
+                - Math.Log10(versucheProEinheit);
+        }
+
+        if (log10Sekunden < 0)
+        {
+            Console.WriteLine(
+                "Weniger als eine Sekunde."
+            );
+
+            return;
+        }
+
+        if (log10Sekunden < Math.Log10(60))
+        {
+            double sekunden =
+                Math.Pow(10, log10Sekunden);
+
+            Console.WriteLine(
+                $"Ungefähr {sekunden:F1} Sekunden."
+            );
+        }
+        else if (log10Sekunden < Math.Log10(3600))
+        {
+            double minuten =
+                Math.Pow(10, log10Sekunden) / 60;
+
+            Console.WriteLine(
+                $"Ungefähr {minuten:F1} Minuten."
+            );
+        }
+        else if (log10Sekunden < Math.Log10(86400))
+        {
+            double stunden =
+                Math.Pow(10, log10Sekunden) / 3600;
+
+            Console.WriteLine(
+                $"Ungefähr {stunden:F1} Stunden."
+            );
+        }
+        else if (log10Sekunden < Math.Log10(31536000))
+        {
+            double tage =
+                Math.Pow(10, log10Sekunden) / 86400;
+
+            Console.WriteLine(
+                $"Ungefähr {tage:F1} Tage."
+            );
+        }
+        else if (log10Sekunden < 15)
+        {
+            double jahre =
+                Math.Pow(10, log10Sekunden)
+                / 31536000;
+
+            Console.WriteLine(
+                $"Ungefähr {jahre:F1} Jahre."
+            );
+        }
+        else
+        {
+            double log10Jahre =
+                log10Sekunden
+                - Math.Log10(31536000);
+
+            Console.WriteLine(
+                $"Ungefähr 10^{log10Jahre:F1} Jahre."
+            );
+        }
+    }
+
+    static void ZeigeVerbesserungsvorschlaege(
+        string passwort,
+        bool hatKleinbuchstaben,
+        bool hatGrossbuchstaben,
+        bool hatZahl,
+        bool hatSonderzeichen,
+        bool istHaeufigesPasswort,
+        bool hatEinfachesMuster
+    )
+    {
+        Console.WriteLine(
+            "Verbesserungsvorschläge:"
+        );
+
+        bool vorschlagAngezeigt = false;
+
+        if (passwort.Length < 15)
+        {
+            Console.WriteLine(
+                "- Verwende mindestens 15 Zeichen."
+            );
+
+            vorschlagAngezeigt = true;
+        }
+
+        if (!hatKleinbuchstaben)
+        {
+            Console.WriteLine(
+                "- Füge Kleinbuchstaben hinzu."
+            );
+
+            vorschlagAngezeigt = true;
+        }
+
+        if (!hatGrossbuchstaben)
+        {
+            Console.WriteLine(
+                "- Füge Grossbuchstaben hinzu."
+            );
+
+            vorschlagAngezeigt = true;
+        }
+
+        if (!hatZahl)
+        {
+            Console.WriteLine(
+                "- Füge mindestens eine Zahl hinzu."
+            );
+
+            vorschlagAngezeigt = true;
+        }
+
+        if (!hatSonderzeichen)
+        {
+            Console.WriteLine(
+                "- Füge ein Sonderzeichen hinzu."
+            );
+
+            vorschlagAngezeigt = true;
+        }
+
+        if (istHaeufigesPasswort)
+        {
+            Console.WriteLine(
+                "- Verwende kein häufiges Passwort."
+            );
+
+            vorschlagAngezeigt = true;
+        }
+
+        if (hatEinfachesMuster)
+        {
+            Console.WriteLine(
+                "- Vermeide einfache Muster und Zahlenfolgen."
+            );
+
+            vorschlagAngezeigt = true;
+        }
+
+        if (!vorschlagAngezeigt)
+        {
+            Console.WriteLine(
+                "Das Passwort erfüllt die Kriterien dieses "
+                + "Tests gut."
+            );
+        }
+    }
+
+    static void BmiBerechnen()
+    {
+        Console.WriteLine("==========================================");
+        Console.WriteLine("                BMI-RECHNER");
+        Console.WriteLine("==========================================");
+
+        Console.WriteLine();
+
+        decimal gewicht = DezimalzahlEingeben(
+            "Wie viel wiegst du in Kilogramm? ",
+            darfNegativSein: false
+        );
+
+        decimal groesse = DezimalzahlEingeben(
+            "Wie gross bist du in Metern? ",
+            darfNegativSein: false
+        );
+
+        if (groesse == 0)
+        {
+            Console.WriteLine(
+                "Die Körpergrösse darf nicht 0 sein."
+            );
+
+            return;
+        }
+
+        decimal bmi =
+            gewicht / (groesse * groesse);
+
+        Console.WriteLine();
+
+        Console.WriteLine(
+            $"Dein BMI beträgt {bmi:F2}."
+        );
+
+        if (bmi < 18.5m)
+        {
+            Console.WriteLine(
+                "Das Ergebnis liegt im Bereich Untergewicht."
+            );
+        }
+        else if (bmi < 25m)
+        {
+            Console.WriteLine(
+                "Das Ergebnis liegt im Normalbereich."
+            );
+        }
+        else if (bmi < 30m)
+        {
+            Console.WriteLine(
+                "Das Ergebnis liegt im Bereich Übergewicht."
+            );
+        }
+        else
+        {
+            Console.WriteLine(
+                "Das Ergebnis liegt im Bereich Adipositas."
+            );
+        }
+
+        Console.WriteLine();
+
+        Console.WriteLine(
+            "Hinweis: Der BMI ist nur ein grober Richtwert."
         );
     }
 
@@ -404,13 +1272,15 @@ class Program
                 out decimal zahl
             );
 
-            if (istZahl && (darfNegativSein || zahl >= 0))
+            if (istZahl &&
+                (darfNegativSein || zahl >= 0))
             {
                 return zahl;
             }
 
             Console.WriteLine(
-                "Ungültige Eingabe. Bitte gib eine gültige Zahl ein."
+                "Ungültige Eingabe. Bitte gib eine gültige "
+                + "Zahl ein."
             );
         }
     }
@@ -428,7 +1298,10 @@ class Program
             string eingabe = Console.ReadLine() ?? "";
 
             bool istGanzeZahl =
-                int.TryParse(eingabe, out int zahl);
+                int.TryParse(
+                    eingabe,
+                    out int zahl
+                );
 
             if (istGanzeZahl &&
                 zahl >= minimum &&
