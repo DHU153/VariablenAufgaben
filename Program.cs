@@ -25,6 +25,10 @@ class Program
             Console.WriteLine("9. Protein-Schokoriegel kaufen");
             Console.WriteLine("10. Passwort-Stärke testen");
             Console.WriteLine("11. BMI berechnen");
+            Console.WriteLine("12. Zahlen vergleichen");
+            Console.WriteLine("13. Gerade oder ungerade prüfen");
+            Console.WriteLine("14. Passwort generieren");
+            Console.WriteLine("15. Zufallszahl generieren");
             Console.WriteLine("0. Programm beenden");
             Console.WriteLine("==========================================");
 
@@ -77,6 +81,22 @@ class Program
 
                 case "11":
                     BmiBerechnen();
+                    break;
+
+                case "12":
+                    ZahlenVergleichen();
+                    break;
+
+                case "13":
+                    GeradeOderUngerade();
+                    break;
+
+                case "14":
+                    PasswortGenerieren();
+                    break;
+
+                case "15":
+                    ZufallszahlGenerieren();
                     break;
 
                 case "0":
@@ -188,6 +208,7 @@ class Program
         );
 
         Console.WriteLine();
+
         Console.WriteLine(
             "Dein Name wird unten in Grossbuchstaben angegeben:"
         );
@@ -252,6 +273,7 @@ class Program
             bruttolohn - steuerBetrag;
 
         Console.WriteLine();
+
         Console.WriteLine(
             $"Steuerbetrag: {steuerBetrag:F2} Franken"
         );
@@ -509,94 +531,51 @@ class Program
             $"Länge: {passwort.Length} Zeichen"
         );
 
-        if (passwort.Length >= 8)
-        {
-            Console.WriteLine(
-                "✓ Das Passwort ist mindestens 8 Zeichen lang."
-            );
-        }
-        else
-        {
-            Console.WriteLine(
-                "✗ Das Passwort ist kürzer als 8 Zeichen."
-            );
-        }
+        Console.WriteLine(
+            passwort.Length >= 8
+                ? "✓ Mindestens 8 Zeichen."
+                : "✗ Kürzer als 8 Zeichen."
+        );
 
-        if (passwort.Length >= 12)
-        {
-            Console.WriteLine(
-                "✓ Das Passwort ist mindestens 12 Zeichen lang."
-            );
-        }
-        else
-        {
-            Console.WriteLine(
-                "✗ Das Passwort ist kürzer als 12 Zeichen."
-            );
-        }
+        Console.WriteLine(
+            passwort.Length >= 12
+                ? "✓ Mindestens 12 Zeichen."
+                : "✗ Kürzer als 12 Zeichen."
+        );
 
         if (passwort.Length >= 15)
         {
             Console.WriteLine(
-                "✓ Das Passwort ist mindestens 15 Zeichen lang."
+                "✓ Mindestens 15 Zeichen."
             );
         }
 
-        if (hatKleinbuchstaben)
-        {
-            Console.WriteLine(
-                "✓ Das Passwort enthält Kleinbuchstaben."
-            );
-        }
-        else
-        {
-            Console.WriteLine(
-                "✗ Es fehlen Kleinbuchstaben."
-            );
-        }
+        Console.WriteLine(
+            hatKleinbuchstaben
+                ? "✓ Enthält Kleinbuchstaben."
+                : "✗ Keine Kleinbuchstaben."
+        );
 
-        if (hatGrossbuchstaben)
-        {
-            Console.WriteLine(
-                "✓ Das Passwort enthält Grossbuchstaben."
-            );
-        }
-        else
-        {
-            Console.WriteLine(
-                "✗ Es fehlen Grossbuchstaben."
-            );
-        }
+        Console.WriteLine(
+            hatGrossbuchstaben
+                ? "✓ Enthält Grossbuchstaben."
+                : "✗ Keine Grossbuchstaben."
+        );
 
-        if (hatZahl)
-        {
-            Console.WriteLine(
-                "✓ Das Passwort enthält mindestens eine Zahl."
-            );
-        }
-        else
-        {
-            Console.WriteLine(
-                "✗ Es fehlt mindestens eine Zahl."
-            );
-        }
+        Console.WriteLine(
+            hatZahl
+                ? "✓ Enthält eine Zahl."
+                : "✗ Keine Zahl."
+        );
 
-        if (hatSonderzeichen)
-        {
-            Console.WriteLine(
-                "✓ Das Passwort enthält ein Sonderzeichen."
-            );
-        }
-        else
-        {
-            Console.WriteLine(
-                "✗ Es fehlt mindestens ein Sonderzeichen."
-            );
-        }
+        Console.WriteLine(
+            hatSonderzeichen
+                ? "✓ Enthält ein Sonderzeichen."
+                : "✗ Kein Sonderzeichen."
+        );
 
         if (istHaeufigesPasswort)
         {
-            Console.WriteLine();
             Console.WriteLine(
                 "⚠ Das Passwort ist sehr häufig."
             );
@@ -604,7 +583,6 @@ class Program
 
         if (hatEinfachesMuster)
         {
-            Console.WriteLine();
             Console.WriteLine(
                 "⚠ Das Passwort enthält ein einfaches Muster."
             );
@@ -937,10 +915,7 @@ class Program
         double log10Zeichenraum =
             Math.Log10(zeichenraum);
 
-        double log10Versuche =
-            passwort.Length * log10Zeichenraum;
-
-        return log10Versuche;
+        return passwort.Length * log10Zeichenraum;
     }
 
     static void ZeigeKnackzeiten(
@@ -1232,6 +1207,147 @@ class Program
 
         Console.WriteLine(
             "Hinweis: Der BMI ist nur ein grober Richtwert."
+        );
+    }
+
+    static void ZahlenVergleichen()
+    {
+        decimal zahl1 = DezimalzahlEingeben(
+            "Gib die 1. Zahl ein: "
+        );
+
+        decimal zahl2 = DezimalzahlEingeben(
+            "Gib die 2. Zahl ein: "
+        );
+
+        Console.WriteLine();
+
+        if (zahl1 > zahl2)
+        {
+            Console.WriteLine(
+                $"{zahl1} ist grösser als {zahl2}."
+            );
+        }
+        else if (zahl1 < zahl2)
+        {
+            Console.WriteLine(
+                $"{zahl1} ist kleiner als {zahl2}."
+            );
+        }
+        else
+        {
+            Console.WriteLine(
+                "Die beiden Zahlen sind gleich."
+            );
+        }
+    }
+
+    static void GeradeOderUngerade()
+    {
+        int zahl = GanzeZahlEingeben(
+            "Gib eine ganze Zahl ein: ",
+            int.MinValue,
+            int.MaxValue
+        );
+
+        if (zahl % 2 == 0)
+        {
+            Console.WriteLine(
+                "Die Zahl ist gerade."
+            );
+        }
+        else
+        {
+            Console.WriteLine(
+                "Die Zahl ist ungerade."
+            );
+        }
+    }
+
+    static void PasswortGenerieren()
+    {
+        const string kleinbuchstaben =
+            "abcdefghijklmnopqrstuvwxyz";
+
+        const string grossbuchstaben =
+            "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+        const string zahlen =
+            "0123456789";
+
+        const string sonderzeichen =
+            "!@#$%&*+-_?";
+
+        string alleZeichen =
+            kleinbuchstaben
+            + grossbuchstaben
+            + zahlen
+            + sonderzeichen;
+
+        int laenge = GanzeZahlEingeben(
+            "Wie viele Zeichen soll das Passwort haben? ",
+            8,
+            64
+        );
+
+        Random zufall = new Random();
+        char[] passwort = new char[laenge];
+
+        for (int i = 0; i < laenge; i++)
+        {
+            int position =
+                zufall.Next(0, alleZeichen.Length);
+
+            passwort[i] =
+                alleZeichen[position];
+        }
+
+        Console.WriteLine();
+
+        Console.WriteLine(
+            "Generiertes Passwort:"
+        );
+
+        Console.WriteLine(
+            new string(passwort)
+        );
+
+        Console.WriteLine();
+
+        Console.WriteLine(
+            "Hinweis: Für echte Konten solltest du einen "
+            + "Passwortmanager verwenden."
+        );
+    }
+
+    static void ZufallszahlGenerieren()
+    {
+        int minimum = GanzeZahlEingeben(
+            "Gib den kleinsten möglichen Wert ein: ",
+            int.MinValue,
+            int.MaxValue - 1
+        );
+
+        int maximum = GanzeZahlEingeben(
+            "Gib den grössten möglichen Wert ein: ",
+            minimum,
+            int.MaxValue
+        );
+
+        Random zufall = new Random();
+
+        int zufallszahl =
+            zufall.Next(
+                minimum,
+                maximum == int.MaxValue
+                    ? maximum
+                    : maximum + 1
+            );
+
+        Console.WriteLine();
+
+        Console.WriteLine(
+            $"Die Zufallszahl lautet: {zufallszahl}"
         );
     }
 
