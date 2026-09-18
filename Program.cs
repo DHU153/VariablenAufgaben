@@ -82,19 +82,6 @@ Console.WriteLine("Die Variable 'x' um 1 erhöht ist " + x);
 x--;
 x--;
 Console.WriteLine("Die Variable 'x' um 2 erniedrigt ist " + x);
-x++;
-Console.WriteLine("Wie hoch ist die Variable 'x'? ");
-decimal xEingabe = decimal.Parse(Console.ReadLine());
-if (xEingabe == x)
-Console.WriteLine("Die Variable 'x' ist korrekt.");
-else
-Console.WriteLine("Die Variable 'x' ist nicht korrekt.");
-Console.WriteLine("Möchtest du die Lösung sehen? (ja/nein)");
-string antwort = Console.ReadLine();
-if (antwort.ToLower() == "ja")
-Console.WriteLine("Die Variable 'x' ist " + x);
-else
-Console.WriteLine("Okay, die Lösung wird nicht angezeigt.");
 
 
 //Protein-Schokoriegel Aufgabe
